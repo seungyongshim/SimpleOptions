@@ -17,11 +17,16 @@ public class UnitTest1
             "Section1" :
             {
                 "Value1" : "Hello"
+            },
+            "Section2" :
+            {
+                "Value2" : "Hello2"
             }
         }
         """)));
 
         builder.Services.AddSimpleOptions<Option1>("Section1");
+        builder.Services.AddSimpleOptions<Option1>("Section2");
 
         var app = builder.Build();
 
