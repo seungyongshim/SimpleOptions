@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using System.Text;
+using FluentValidation;
 
 namespace SimpleOptions.Tests;
 
@@ -25,7 +26,11 @@ public class UnitTest1
         }
         """)));
 
-        builder.Services.AddSimpleOptions<Option1>("Section1");
+        builder.Services.AddSimpleOptions<Option1>("Section1", validate: (v, sp) =>
+        {
+            var validator = new Option1Validator();
+            validator.ValidateAndThrow(v);
+        });
         builder.Services.AddSimpleOptions<Option1>("Section2");
 
         var app = builder.Build();
@@ -35,6 +40,14 @@ public class UnitTest1
         var option1 = app.Services.GetKeyedService<Option1>("Section1");
 
         await app.StopAsync();
+    }
+}
+
+public class Option1Validator: AbstractValidator<Option1>
+{
+    public Option1Validator()
+    {
+        RuleFor(x => x.Value3).NotNull();
     }
 }
 
