@@ -4,7 +4,7 @@ public class SimpleImmutableOptionValidator : AbstractValidator<SimpleImmutableO
 {
     public SimpleImmutableOptionValidator()
     {
-        RuleFor(x => x.DbConnectionString).NotEmpty();
+        RuleFor(x => x.SqsUrl).NotEmpty();
     }
 }
 

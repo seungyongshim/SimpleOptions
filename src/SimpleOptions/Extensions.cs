@@ -1,9 +1,10 @@
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
 internal delegate void SimpleOptionValid();
-public static class Extensions
+public static class ExtensionMethods
 {
     public static IServiceCollection AddSimpleOptions<T>(this IServiceCollection services,
         string key,
@@ -14,7 +15,7 @@ public static class Extensions
         post ??= (v, _) => v;
         validate ??= (_, _) => { };
 
-        services.AddKeyedSingleton<T>(key, (sp, _) =>
+        services.TryAddKeyedSingleton<T>(key, (sp, _) =>
         {
             var configuration = sp.GetRequiredService<IConfiguration>();
 

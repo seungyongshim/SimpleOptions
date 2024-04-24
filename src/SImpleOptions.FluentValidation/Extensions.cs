@@ -1,18 +1,19 @@
 using Microsoft.Extensions.Configuration;
 using FluentValidation;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
-public static class Extensions
+public static class ExtensionMethods
 {
     public static IServiceCollection AddSimpleOptions<T>(this IServiceCollection services,
        string key,
-       bool useFluentValidation = false,
+       bool useFluentValidation,
        Func<T, IServiceProvider, T>? post = null) where T : class
     {
         post ??= (v, _) => v;
 
-        services.AddKeyedSingleton<T>(key, (sp, _) =>
+        services.TryAddKeyedSingleton<T>(key, (sp, _) =>
         {
             var configuration = sp.GetRequiredService<IConfiguration>();
 

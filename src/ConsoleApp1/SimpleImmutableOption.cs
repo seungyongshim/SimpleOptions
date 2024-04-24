@@ -1,4 +1,4 @@
-﻿public record SimpleImmutableOption
+public record SimpleImmutableOption
 {
-    public required string DbConnectionString { get; init; }
+    public required string SqsUrl { get; init; }
 }
