@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<coverage version="1.0" date="2024-04-24_13-18-05" tag="28_8817130891">
+  <assembly name="SimpleOptions">
+    <class name="Microsoft.Extensions.DependencyInjection.ExtensionMethods" coveredlines="22" coverablelines="22" totallines="44" coveredbranches="10" totalbranches="10" coveredcodeelements="1" totalcodeelements="1" />
+    <class name="Microsoft.Extensions.DependencyInjection.ValidatorHostedService" coveredlines="15" coverablelines="28" totallines="48" coveredbranches="3" totalbranches="8" coveredcodeelements="3" totalcodeelements="3" />
+  </assembly>
+</coverage>
