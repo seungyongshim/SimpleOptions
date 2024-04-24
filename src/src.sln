@@ -12,7 +12,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleOptions", "SimpleOpti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleOptions.Tests", "SimpleOptions.Tests\SimpleOptions.Tests.csproj", "{18E2A74D-AA97-44A2-9884-3A6C5DCD0DEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleOptions.FluentValidation", "SimpleOptions.FluentValidation\SimpleOptions.FluentValidation.csproj", "{0F3B68A1-CEA3-4A12-AA83-1057576DD164}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleOptions.FluentValidation", "SimpleOptions.FluentValidation1\SimpleOptions.FluentValidation.csproj", "{0F3B68A1-CEA3-4A12-AA83-1057576DD164}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{65AEF545-0FC8-40BC-BC43-FA818C747B36}"
 EndProject
