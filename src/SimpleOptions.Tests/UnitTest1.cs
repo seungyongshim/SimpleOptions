@@ -47,7 +47,7 @@ public class Option1Validator: AbstractValidator<Option1>
 {
     public Option1Validator()
     {
-        RuleFor(x => x.Value3).NotNull();
+        //RuleFor(x => x.Value3).NotNull();
     }
 }
 
