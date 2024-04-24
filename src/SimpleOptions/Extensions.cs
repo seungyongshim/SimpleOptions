@@ -1,42 +1,43 @@
-namespace SImpleOptions.FluentValidation;
-using UserId = string;
-using ProjectId = string;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using global::FluentValidation;
 
-public static class Extension
+namespace Microsoft.Extensions.DependencyInjection;
+
+internal delegate void SimpleOptionValid();
+public static class Extensions
 {
     public static IServiceCollection AddSimpleOptions<T>(this IServiceCollection services,
-       string key,
-       Func<T, IServiceProvider, T>? post = null
-   ) where T : class
+        string key,
+        Func<T, IServiceProvider, T>? post = null,
+        Action<T, IServiceProvider> validate = null
+        ) where T : class
     {
         post ??= (v, _) => v;
+        validate ??= (_, _) => { };
 
         services.AddKeyedSingleton<T>(key, (sp, _) =>
         {
             var configuration = sp.GetRequiredService<IConfiguration>();
 
-            var v = configuration.GetRequiredSection(key).Get<T>(option =>
+            var v = configuration.GetSection(key).Get<T>(option =>
             {
                 option.BindNonPublicProperties = true;
             });
 
-            return post.Invoke(v ?? throw new ArgumentNullException(key), sp);
+            return post.Invoke(v, sp);
         });
 
         services.AddTransient<SimpleOptionValid>(sp =>
         {
             var v = sp.GetRequiredKeyedService<T>(key);
-            var validate = sp.GetRequiredService<IValidator<T>>();
-            return () => validate.Validate(v);
+            return () => validate.Invoke(v, sp);
         });
 
         services.AddHostedService<ValidatorHostedService>();
 
         return services;
     }
+
+
 }
-        
-        
+
+
