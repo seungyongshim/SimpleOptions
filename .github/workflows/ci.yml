@@ -9,7 +9,7 @@ on:
 jobs:
   Build-and-Tests:
     name: Build and Test
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: running infrastructure
