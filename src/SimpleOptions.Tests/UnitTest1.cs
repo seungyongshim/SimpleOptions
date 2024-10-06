@@ -26,11 +26,16 @@ public class UnitTest1
         }
         """)));
 
-        builder.Services.AddSimpleOptions<Option1>("Section1", validate: (v, sp) =>
-        {
-            var validator = new Option1Validator();
-            validator.ValidateAndThrow(v);
-        });
+        builder.Services.AddSimpleOptions<Option1>("Section1",
+            (v, sp) => v with
+            {
+                Value3 = "World"
+            },
+            (v, sp) =>
+            {
+                var validator = new Option1Validator();
+                return validator.Validate(v).IsValid;
+            });
         builder.Services.AddSimpleOptions<Option1>("Section2");
 
         var app = builder.Build();
@@ -47,14 +52,14 @@ public class Option1Validator: AbstractValidator<Option1>
 {
     public Option1Validator()
     {
-        //RuleFor(x => x.Value3).NotNull();
+        RuleFor(x => x.Value3).NotNull();
     }
 }
 
 
 public record Option1
 {
-    public string Value1 { get; init; }
-    public string Value2 { get; init; }
-    public string Value3 { get; init; }
+    public required string Value1 { get; init; }
+    public required string Value2 { get; init; }
+    public string? Value3 { get; init; }
 }

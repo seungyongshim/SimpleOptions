@@ -25,17 +25,6 @@ public static class ExtensionMethods
             return post.Invoke(v ?? throw new ArgumentNullException(key), sp);
         });
 
-        if (useFluentValidation)
-        {
-            services.AddTransient<SimpleOptionValid>(sp =>
-            {
-                var v = sp.GetRequiredKeyedService<T>(key);
-                var validate = sp.GetRequiredService<IValidator<T>>();
-                return () => validate.ValidateAndThrow(v);
-            });
-
-            services.AddHostedService<ValidatorHostedService>();
-        }
         return services;
     }
 }
