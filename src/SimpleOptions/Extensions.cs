@@ -7,11 +7,13 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ExtensionMethods
 {
-    public static IServiceCollection AddSimpleOptions<T>(this IServiceCollection          services,
+    public static IServiceCollection AddSimpleOptions<T>
+    (
+        this IServiceCollection services,
         string key,
         Func<T, IServiceProvider, T>? post = null,
-        Func<T, IServiceProvider, bool> validate = null
-        ) where T : class
+        Func<T, IServiceProvider, bool>? validate = null
+    ) where T : class
     {
         post ??= (v, _) => v;
         validate ??= (_, _) => true;
@@ -29,11 +31,10 @@ public static class ExtensionMethods
                 })
                 .ValidateOnStart();
         
-        services.TryAddKeyedSingleton<T>(key, (sp, _) =>
+        services.TryAddKeyedSingleton(key, (sp, _) =>
         {
             var v = sp.GetRequiredService<IOptionsMonitor<T>>().Get(key);
-            v = post.Invoke(v, sp);
-            return v;
+            return post.Invoke(v, sp);
         });
 
         return services;

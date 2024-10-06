@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimpleOptions.FluentValidation1\SimpleOptions.FluentValidation.csproj" />
+    <ProjectReference Include="..\SimpleOptions\SimpleOptions.csproj" />
   </ItemGroup>
 
 </Project>
