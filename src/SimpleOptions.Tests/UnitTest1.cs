@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using System.Text;
 using FluentValidation;
 using System.Diagnostics.CodeAnalysis;
+using System.ComponentModel.DataAnnotations;
 
 namespace SimpleOptions.Tests;
 
@@ -57,8 +58,8 @@ public class TestOptionValidator: AbstractValidator<TestOption>
 public record TestOption
 {
     public required string Value1 { get; init; }
-    [NotNull]
-    public string? Value2 { get; init; }
+    [Required]
+    public string Value2 { get; init; }
     public string? Value3 { get; init; }
     public IReadOnlyCollection<string> Value4 { get; init; } = [];
 }

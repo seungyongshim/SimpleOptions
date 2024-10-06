@@ -12,7 +12,7 @@ public class FluentValidateOptions<T>
 {
     public ValidateOptionsResult Validate(string? name, T options)
     {
-        if(string.Equals(key, name, StringComparison.OrdinalIgnoreCase))
+        if(!string.Equals(key, name, StringComparison.OrdinalIgnoreCase))
         {
             return ValidateOptionsResult.Skip;
         }
