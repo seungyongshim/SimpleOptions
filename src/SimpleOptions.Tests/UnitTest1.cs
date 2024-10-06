@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using System.Text;
 using FluentValidation;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SimpleOptions.Tests;
 
@@ -17,7 +18,8 @@ public class UnitTest1
         {
             "Section1" :
             {
-                "Value1" : "Hello"
+                "Value1" : "Hello",
+                "Value4" : ["A", "B"]
             },
             "Section2" :
             {
@@ -26,10 +28,10 @@ public class UnitTest1
         }
         """)));
 
-        builder.Services.AddSingleton<IValidator<TestOption>, Option1Validator>();
+        builder.Services.AddSingleton<IValidator<TestOption>, TestOptionValidator>();
         builder.Services.AddSimpleOptions<TestOption>("Section1", (v, sp) => v with
         {
-            Value3 = "World"
+            //Value3 = "World"
         }, (v, sp) =>
         {
             var validator = sp.GetRequiredService<IValidator<TestOption>>();
@@ -47,9 +49,9 @@ public class UnitTest1
     }
 }
 
-public class Option1Validator: AbstractValidator<TestOption>
+public class TestOptionValidator: AbstractValidator<TestOption>
 {
-    public Option1Validator()
+    public TestOptionValidator()
     {
         RuleFor(x => x.Value3).NotNull();
     }
@@ -59,6 +61,8 @@ public class Option1Validator: AbstractValidator<TestOption>
 public record TestOption
 {
     public required string Value1 { get; init; }
-    public required string Value2 { get; init; }
+    [NotNull]
+    public string? Value2 { get; init; }
     public string? Value3 { get; init; }
+    public IReadOnlyCollection<string> Value4 { get; init; } = [];
 }
