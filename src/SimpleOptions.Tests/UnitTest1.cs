@@ -28,15 +28,10 @@ public class UnitTest1
         }
         """)));
 
-        builder.Services.AddSingleton<IValidator<TestOption>, TestOptionValidator>();
         builder.Services.AddSimpleOptions<TestOption>("Section1", (v, sp) => v with
         {
-            Value3 = "World"
-        }, (v, sp) =>
-        {
-            var validator = sp.GetRequiredService<IValidator<TestOption>>();
-            return validator.Validate(v).IsValid;
-        });
+            // Value3 = "World"
+        });//.AddFluentValidator<TestOptionValidator>();
         builder.Services.AddSimpleOptions<TestOption>(TestOptionTypes.Section2);
 
         var app = builder.Build();
