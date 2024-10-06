@@ -36,13 +36,13 @@ public static class ExtensionMethods
         services.TryAddTransient<IOptionsFactory<T>, KeyedOptionsFactory<T>>();
         services.AddKeyedSingleton<FuncPostConfigure<T>>(key, (sp, key) => v => post.Invoke(v, sp));
         services.TryAddKeyedTransient(typeof(IValidateOptions<>), key, typeof(FluentValidateOptions<>));
+        services.TryAddKeyedSingleton<IValidateOptions<T>>(key, new DataAnnotationValidateOptions<T>(key));
 
         services.AddOptions<T>(key)
                 .BindConfiguration(key, option =>
                 {
                     option.BindNonPublicProperties = true;
                 })
-                .ValidateDataAnnotations()
                 .ValidateOnStart();
         
         services.TryAddKeyedSingleton(key, (sp, _) =>

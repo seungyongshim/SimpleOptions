@@ -19,12 +19,7 @@ internal class KeyedOptionsFactory<TOptions>
     {
         var setups = sp.GetRequiredService<IEnumerable<IConfigureOptions<TOptions>>>();
         var postConfigures = sp.GetRequiredKeyedService<IEnumerable<FuncPostConfigure<TOptions>>>(name);
-        IEnumerable<IValidateOptions<TOptions>> validations =
-        [
-            ..sp.GetKeyedService<IEnumerable<IValidateOptions<TOptions>>>(name) ?? [],
-            ..sp.GetService<IEnumerable<IValidateOptions<TOptions>>>() ?? []
-        ];
- 
+        var validations = sp.GetKeyedService<IEnumerable<IValidateOptions<TOptions>>>(name) ?? [];
         var options = CreateInstance(name);
 
         foreach (var setup in setups)
